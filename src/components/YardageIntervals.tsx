@@ -222,7 +222,7 @@ export default function YardageIntervals({ session, onBack }: YardageIntervalsPr
       )}
 
       {activeTab === "overview" && (
-        <OverviewView />
+        <OverviewView sessionStrokesGained={session.strokesGained} />
       )}
 
       {activeTab === "dispersion" && (
@@ -241,7 +241,7 @@ function computeStats(shots: DispersionShot[]) {
   return { avgSG, avgProximity, bestShot, count: shots.length };
 }
 
-function OverviewView() {
+function OverviewView({ sessionStrokesGained }: { sessionStrokesGained: number }) {
   const allStats = computeStats(dispersionShots);
 
   const targetGroups = dispersionTargets.map((target) => {
@@ -259,9 +259,9 @@ function OverviewView() {
         <div className="grid grid-cols-3 gap-4">
           <MetricCard
             label="Avg Strokes"
-            value={`${allStats.avgSG >= 0 ? "+" : ""}${allStats.avgSG.toFixed(2)}`}
+            value={`${sessionStrokesGained >= 0 ? "+" : ""}${sessionStrokesGained.toFixed(2)}`}
             subtitle="VS Mens Tour"
-            valueColor={allStats.avgSG > 0 ? "text-green-500" : allStats.avgSG < 0 ? "text-primary" : "text-white"}
+            valueColor={sessionStrokesGained > 0 ? "text-green-500" : sessionStrokesGained < 0 ? "text-primary" : "text-white"}
           />
           <MetricCard
             label="Avg Proximity"
