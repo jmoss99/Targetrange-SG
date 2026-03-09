@@ -478,7 +478,7 @@ function DispersionView() {
           >
             {/* Golf course background */}
             <img
-              src="/golf-course-map.jpg"
+              src={`${import.meta.env.BASE_URL}golf-course-map.jpg`}
               alt="Golf course aerial view"
               className="absolute inset-0 h-full w-full object-cover"
             />
