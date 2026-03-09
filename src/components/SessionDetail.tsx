@@ -435,7 +435,7 @@ function ClubBadge({ abbr, color }: { abbr: string; color: string }) {
 }
 
 function ReplayButton({ icon }: { icon: "swing" | "tracer" | "data" }) {
-  const paths: Record<string, JSX.Element> = {
+  const paths: Record<string, React.ReactNode> = {
     swing: (
       <path
         d="M10 4v12M7 7l3-3 3 3M10 16c-3 0-5-1-5-3"
