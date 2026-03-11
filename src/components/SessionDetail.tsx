@@ -100,7 +100,7 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
             <ChevronLeftIcon className="h-4 w-4 text-black" />
           </button>
           <h1 className="font-acumin text-[40px] font-bold italic uppercase leading-none text-black">
-            Practice - {session.date}
+            Target Range - {session.date}
           </h1>
         </div>
         <div className="flex items-center gap-4">
