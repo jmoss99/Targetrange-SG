@@ -329,7 +329,7 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
           onClick={() => setShowSGInfo(false)}
         >
           <div
-            className="mx-4 flex w-full max-w-2xl flex-col gap-5 rounded-2xl bg-white p-8 shadow-2xl"
+            className="mx-4 flex w-full max-w-4xl flex-col gap-5 rounded-2xl bg-white p-8 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between">
