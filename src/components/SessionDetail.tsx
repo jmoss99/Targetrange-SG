@@ -357,11 +357,11 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
                 <span className="font-acumin text-xl font-bold italic text-white">SG</span>
                 <span className="text-lg text-neutral-400">=</span>
                 <span className="font-barlow text-[15px] font-medium text-white">
-                  Expected Strokes<span className="text-neutral-500">(start)</span>
+                  Expected Strokes<span className="text-neutral-500">(start position)</span>
                 </span>
                 <span className="text-lg text-neutral-400">-</span>
                 <span className="font-barlow text-[15px] font-medium text-white">
-                  Expected Strokes<span className="text-neutral-500">(end)</span>
+                  Expected Strokes<span className="text-neutral-500">(end position)</span>
                 </span>
                 <span className="text-lg text-neutral-400">-</span>
                 <span className="font-acumin text-xl font-bold italic text-white">1</span>
