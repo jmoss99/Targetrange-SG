@@ -329,7 +329,7 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
           onClick={() => setShowSGInfo(false)}
         >
           <div
-            className="mx-4 flex max-h-[90vh] w-full max-w-4xl flex-col gap-4 overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl"
+            className="mx-4 flex w-full max-w-6xl flex-col gap-4 rounded-2xl bg-white p-6 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between">
@@ -372,89 +372,85 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
               </p>
             </div>
 
-            {/* Green Visual */}
-            <div className="flex flex-col gap-2">
-              <span className="font-barlow text-[10px] font-semibold uppercase tracking-widest text-neutral-400">
-                Visual Example
-              </span>
-              <div className="overflow-hidden rounded-xl border border-neutral-200">
-                <svg viewBox="0 0 460 220" className="w-full" xmlns="http://www.w3.org/2000/svg">
-                  {/* Fairway / rough background */}
-                  <rect width="460" height="220" fill="#4a7c3f" />
-                  {/* Green shape */}
-                  <ellipse cx="310" cy="110" rx="130" ry="90" fill="#5fa84a" />
-                  <ellipse cx="310" cy="110" rx="115" ry="78" fill="#68b553" />
-                  {/* Fringe */}
-                  <ellipse cx="310" cy="110" rx="105" ry="70" fill="#72c25c" />
-                  {/* Green surface */}
-                  <ellipse cx="310" cy="110" rx="95" ry="62" fill="#7ed468" />
+            {/* Two-column: Green Visual + Positive/Negative */}
+            <div className="grid grid-cols-2 gap-4">
+              {/* Green Visual */}
+              <div className="flex flex-col gap-2">
+                <span className="font-barlow text-[10px] font-semibold uppercase tracking-widest text-neutral-400">
+                  Visual Example
+                </span>
+                <div className="overflow-hidden rounded-xl border border-neutral-200">
+                  <svg viewBox="0 0 460 220" className="w-full" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="460" height="220" fill="#4a7c3f" />
+                    <ellipse cx="310" cy="110" rx="130" ry="90" fill="#5fa84a" />
+                    <ellipse cx="310" cy="110" rx="115" ry="78" fill="#68b553" />
+                    <ellipse cx="310" cy="110" rx="105" ry="70" fill="#72c25c" />
+                    <ellipse cx="310" cy="110" rx="95" ry="62" fill="#7ed468" />
 
-                  {/* Flag / hole */}
-                  <circle cx="320" cy="95" r="4" fill="#1a1a1a" />
-                  <line x1="320" y1="95" x2="320" y2="55" stroke="#1a1a1a" strokeWidth="1.5" />
-                  <polygon points="320,55 348,65 320,72" fill="#cd1b32" />
+                    <circle cx="320" cy="95" r="4" fill="#1a1a1a" />
+                    <line x1="320" y1="95" x2="320" y2="55" stroke="#1a1a1a" strokeWidth="1.5" />
+                    <polygon points="320,55 348,65 320,72" fill="#cd1b32" />
 
-                  {/* Expected zone - dashed circle */}
-                  <circle cx="320" cy="95" r="38" fill="none" stroke="white" strokeWidth="1" strokeDasharray="4 3" opacity="0.6" />
-                  <text x="320" y="142" textAnchor="middle" className="font-barlow" fill="white" fontSize="8" opacity="0.6">Expected Zone</text>
+                    <circle cx="320" cy="95" r="38" fill="none" stroke="white" strokeWidth="1" strokeDasharray="4 3" opacity="0.6" />
+                    <text x="320" y="142" textAnchor="middle" className="font-barlow" fill="white" fontSize="8" opacity="0.6">Expected Zone</text>
 
-                  {/* Positive shot - inside expected zone, close to pin */}
-                  <circle cx="330" cy="88" r="6" fill="#22c55e" stroke="white" strokeWidth="1.5" />
-                  {/* Positive label */}
-                  <line x1="336" y1="84" x2="370" y2="60" stroke="#22c55e" strokeWidth="1" />
-                  <rect x="372" y="47" width="78" height="28" rx="6" fill="#22c55e" />
-                  <text x="411" y="58" textAnchor="middle" className="font-barlow" fill="white" fontSize="8" fontWeight="700">CLOSER</text>
-                  <text x="411" y="69" textAnchor="middle" className="font-acumin" fill="white" fontSize="11" fontWeight="700" fontStyle="italic">SG: +0.50</text>
+                    <circle cx="330" cy="88" r="6" fill="#22c55e" stroke="white" strokeWidth="1.5" />
+                    <line x1="336" y1="84" x2="370" y2="60" stroke="#22c55e" strokeWidth="1" />
+                    <rect x="372" y="47" width="78" height="28" rx="6" fill="#22c55e" />
+                    <text x="411" y="58" textAnchor="middle" className="font-barlow" fill="white" fontSize="8" fontWeight="700">CLOSER</text>
+                    <text x="411" y="69" textAnchor="middle" className="font-acumin" fill="white" fontSize="11" fontWeight="700" fontStyle="italic">SG: +0.50</text>
 
-                  {/* Negative shot - outside expected zone, far from pin */}
-                  <circle cx="210" cy="140" r="6" fill="#cd1b32" stroke="white" strokeWidth="1.5" />
-                  {/* Negative label */}
-                  <line x1="206" y1="146" x2="160" y2="170" stroke="#cd1b32" strokeWidth="1" />
-                  <rect x="82" y="158" width="78" height="28" rx="6" fill="#cd1b32" />
-                  <text x="121" y="169" textAnchor="middle" className="font-barlow" fill="white" fontSize="8" fontWeight="700">FARTHER</text>
-                  <text x="121" y="180" textAnchor="middle" className="font-acumin" fill="white" fontSize="11" fontWeight="700" fontStyle="italic">SG: -0.30</text>
+                    <circle cx="210" cy="140" r="6" fill="#cd1b32" stroke="white" strokeWidth="1.5" />
+                    <line x1="206" y1="146" x2="160" y2="170" stroke="#cd1b32" strokeWidth="1" />
+                    <rect x="82" y="158" width="78" height="28" rx="6" fill="#cd1b32" />
+                    <text x="121" y="169" textAnchor="middle" className="font-barlow" fill="white" fontSize="8" fontWeight="700">FARTHER</text>
+                    <text x="121" y="180" textAnchor="middle" className="font-acumin" fill="white" fontSize="11" fontWeight="700" fontStyle="italic">SG: -0.30</text>
 
-                  {/* Target marker */}
-                  <line x1="40" y1="110" x2="70" y2="110" stroke="white" strokeWidth="1" strokeDasharray="3 2" opacity="0.4" />
-                  <text x="20" y="114" textAnchor="middle" className="font-barlow" fill="white" fontSize="7" opacity="0.5">TEE</text>
-                  <polygon points="35,110 42,106 42,114" fill="white" opacity="0.4" />
-                </svg>
+                    <line x1="40" y1="110" x2="70" y2="110" stroke="white" strokeWidth="1" strokeDasharray="3 2" opacity="0.4" />
+                    <text x="20" y="114" textAnchor="middle" className="font-barlow" fill="white" fontSize="7" opacity="0.5">TEE</text>
+                    <polygon points="35,110 42,106 42,114" fill="white" opacity="0.4" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Positive / Negative explanations */}
+              <div className="flex flex-col gap-3">
+                <span className="font-barlow text-[10px] font-semibold uppercase tracking-widest text-neutral-400">
+                  How to Read
+                </span>
+                <div className="flex items-start gap-3 rounded-xl bg-green-50 p-4">
+                  <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-500">
+                    <span className="font-acumin text-sm font-bold italic text-white">+</span>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-barlow text-sm font-bold uppercase tracking-wider text-green-700">
+                      Positive Value
+                    </span>
+                    <p className="font-barlow text-sm leading-relaxed text-green-900/80">
+                      Your shot finished closer to the target than expected. The higher the number, the more strokes you gained versus the benchmark.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 rounded-xl bg-red-50 p-4">
+                  <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary">
+                    <span className="font-acumin text-sm font-bold italic text-white">-</span>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-barlow text-sm font-bold uppercase tracking-wider text-red-700">
+                      Negative Value
+                    </span>
+                    <p className="font-barlow text-sm leading-relaxed text-red-900/80">
+                      Your shot finished farther from the target than expected. The lower the number, the more strokes you lost versus the benchmark.
+                    </p>
+                  </div>
+                </div>
+
+                <p className="font-barlow text-xs leading-relaxed text-neutral-500">
+                  Example: A Strokes Gained of +0.50 means your shot finished closer than the benchmark expected. A value of -0.30 means it finished farther away than expected.
+                </p>
               </div>
             </div>
-
-            <div className="flex flex-col gap-3">
-              <div className="flex items-start gap-3 rounded-xl bg-green-50 p-4">
-                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-500">
-                  <span className="font-acumin text-sm font-bold italic text-white">+</span>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="font-barlow text-sm font-bold uppercase tracking-wider text-green-700">
-                    Positive Value
-                  </span>
-                  <p className="font-barlow text-sm leading-relaxed text-green-900/80">
-                    Your shot finished closer to the target than expected. The higher the number, the more strokes you gained versus the benchmark.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 rounded-xl bg-red-50 p-4">
-                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary">
-                  <span className="font-acumin text-sm font-bold italic text-white">-</span>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="font-barlow text-sm font-bold uppercase tracking-wider text-red-700">
-                    Negative Value
-                  </span>
-                  <p className="font-barlow text-sm leading-relaxed text-red-900/80">
-                    Your shot finished farther from the target than expected. The lower the number, the more strokes you lost versus the benchmark.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <p className="font-barlow text-xs leading-relaxed text-neutral-500">
-              Example: A Strokes Gained of +0.50 means your shot finished closer than the benchmark expected. A value of -0.30 means it finished farther away than expected.
-            </p>
           </div>
         </div>
       )}
