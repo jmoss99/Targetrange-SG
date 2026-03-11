@@ -68,6 +68,7 @@ function sgColor(value: number): string {
 export default function SessionDetail({ session, onBack, onYardageIntervals }: SessionDetailProps) {
   const [activeYardage, setActiveYardage] = useState<number | null>(null);
   const [selectedClub, setSelectedClub] = useState<number | null>(null);
+  const [showSGInfo, setShowSGInfo] = useState(false);
 
   const filteredShots = shots.filter((shot) => {
     if (selectedClub !== null && shot.clubIndex !== selectedClub) return false;
@@ -110,6 +111,13 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
             <span className={`font-acumin text-3xl font-bold italic leading-none ${sgColor(session.strokesGained)}`}>
               {formatSG(session.strokesGained)}
             </span>
+            <button
+              onClick={() => setShowSGInfo(true)}
+              className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-neutral-400 text-neutral-400 transition-colors hover:border-neutral-800 hover:text-neutral-800"
+              aria-label="What is Strokes Gained?"
+            >
+              <InfoIcon className="h-3.5 w-3.5" />
+            </button>
           </div>
           <button
             onClick={onYardageIntervals}
@@ -313,6 +321,69 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
           })}
         </div>
       </div>
+
+      {/* Strokes Gained Info Modal */}
+      {showSGInfo && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
+          onClick={() => setShowSGInfo(false)}
+        >
+          <div
+            className="mx-4 flex max-w-lg flex-col gap-5 rounded-2xl bg-white p-8 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between">
+              <h2 className="font-acumin text-3xl font-bold italic uppercase leading-none text-black">
+                Strokes Gained
+              </h2>
+              <button
+                onClick={() => setShowSGInfo(false)}
+                className="flex h-8 w-8 items-center justify-center rounded-full text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-black"
+              >
+                <CloseIcon className="h-5 w-5" />
+              </button>
+            </div>
+
+            <p className="font-barlow text-[15px] leading-relaxed text-neutral-800">
+              Strokes Gained measures how each shot compares to the expected performance of a PGA Tour professional from the same distance. It tells you exactly how much value each shot added — or cost — relative to tour-level play.
+            </p>
+
+            <div className="flex flex-col gap-3">
+              <div className="flex items-start gap-3 rounded-xl bg-green-50 p-4">
+                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-500">
+                  <span className="font-acumin text-sm font-bold italic text-white">+</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="font-barlow text-sm font-bold uppercase tracking-wider text-green-700">
+                    Positive Value
+                  </span>
+                  <p className="font-barlow text-sm leading-relaxed text-green-900/80">
+                    You performed better than a PGA Tour player would from the same position. The higher the number, the more strokes you gained on tour average.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3 rounded-xl bg-red-50 p-4">
+                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary">
+                  <span className="font-acumin text-sm font-bold italic text-white">−</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="font-barlow text-sm font-bold uppercase tracking-wider text-red-700">
+                    Negative Value
+                  </span>
+                  <p className="font-barlow text-sm leading-relaxed text-red-900/80">
+                    You performed below a PGA Tour player from the same position. The lower the number, the more strokes you lost compared to tour average.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <p className="font-barlow text-xs leading-relaxed text-neutral-500">
+              Example: A Strokes Gained of +0.50 means your shot was half a stroke better than the tour average from that distance. A value of −0.30 means your shot was about a third of a stroke worse.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -524,6 +595,23 @@ function ExportIcon({ className }: { className?: string }) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  );
+}
+
+function InfoIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 14 14" fill="currentColor">
+      <path d="M7 0a7 7 0 110 14A7 7 0 017 0zm0 12.6A5.6 5.6 0 107 1.4a5.6 5.6 0 000 11.2zm-.7-4.2h1.4V11H6.3V8.4zM6.3 3h1.4v3.5H6.3V3z" />
+    </svg>
+  );
+}
+
+function CloseIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+      <line x1="5" y1="5" x2="15" y2="15" />
+      <line x1="15" y1="5" x2="5" y2="15" />
     </svg>
   );
 }
