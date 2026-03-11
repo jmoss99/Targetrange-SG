@@ -348,6 +348,29 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
               Strokes Gained measures how each shot compares to the expected performance of a PGA Tour professional from the same distance. It tells you exactly how much value each shot added — or cost — relative to tour-level play.
             </p>
 
+            {/* Equation */}
+            <div className="flex flex-col gap-2 rounded-xl bg-neutral-900 px-5 py-4">
+              <span className="font-barlow text-[10px] font-semibold uppercase tracking-widest text-neutral-400">
+                Formula
+              </span>
+              <div className="flex items-center justify-center gap-2 py-1">
+                <span className="font-acumin text-xl font-bold italic text-white">SG</span>
+                <span className="text-lg text-neutral-400">=</span>
+                <span className="font-barlow text-[15px] font-medium text-white">
+                  Expected Strokes<span className="text-neutral-500">(start)</span>
+                </span>
+                <span className="text-lg text-neutral-400">−</span>
+                <span className="font-barlow text-[15px] font-medium text-white">
+                  Expected Strokes<span className="text-neutral-500">(end)</span>
+                </span>
+                <span className="text-lg text-neutral-400">−</span>
+                <span className="font-acumin text-xl font-bold italic text-white">1</span>
+              </div>
+              <p className="font-barlow text-xs leading-relaxed text-neutral-500">
+                The expected strokes from your starting distance minus the expected strokes from where your ball ended up, minus the one stroke taken. A positive result means you outperformed tour average on that shot.
+              </p>
+            </div>
+
             <div className="flex flex-col gap-3">
               <div className="flex items-start gap-3 rounded-xl bg-green-50 p-4">
                 <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-500">
