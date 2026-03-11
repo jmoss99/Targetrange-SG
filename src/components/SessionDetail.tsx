@@ -329,7 +329,7 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
           onClick={() => setShowSGInfo(false)}
         >
           <div
-            className="mx-4 flex max-w-lg flex-col gap-5 rounded-2xl bg-white p-8 shadow-2xl"
+            className="mx-4 flex w-full max-w-2xl flex-col gap-5 rounded-2xl bg-white p-8 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between">
@@ -345,7 +345,7 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
             </div>
 
             <p className="font-barlow text-[15px] leading-relaxed text-neutral-800">
-              Strokes Gained measures how each shot compares to an expected performance benchmark from the same distance. It tells you exactly how much value each shot added — or cost — relative to that benchmark.
+              Strokes Gained measures how each shot compares to an expected performance benchmark from the same distance. It tells you exactly how much value each shot added or cost relative to that benchmark.
             </p>
 
             {/* Equation */}
@@ -359,11 +359,11 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
                 <span className="font-barlow text-[15px] font-medium text-white">
                   Expected Strokes<span className="text-neutral-500">(start)</span>
                 </span>
-                <span className="text-lg text-neutral-400">−</span>
+                <span className="text-lg text-neutral-400">-</span>
                 <span className="font-barlow text-[15px] font-medium text-white">
                   Expected Strokes<span className="text-neutral-500">(end)</span>
                 </span>
-                <span className="text-lg text-neutral-400">−</span>
+                <span className="text-lg text-neutral-400">-</span>
                 <span className="font-acumin text-xl font-bold italic text-white">1</span>
               </div>
               <p className="font-barlow text-xs leading-relaxed text-neutral-500">
@@ -411,7 +411,7 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
                   <line x1="206" y1="146" x2="160" y2="170" stroke="#cd1b32" strokeWidth="1" />
                   <rect x="82" y="158" width="78" height="28" rx="6" fill="#cd1b32" />
                   <text x="121" y="169" textAnchor="middle" className="font-barlow" fill="white" fontSize="8" fontWeight="700">FARTHER</text>
-                  <text x="121" y="180" textAnchor="middle" className="font-acumin" fill="white" fontSize="11" fontWeight="700" fontStyle="italic">SG: −0.30</text>
+                  <text x="121" y="180" textAnchor="middle" className="font-acumin" fill="white" fontSize="11" fontWeight="700" fontStyle="italic">SG: -0.30</text>
 
                   {/* Target marker */}
                   <line x1="40" y1="110" x2="70" y2="110" stroke="white" strokeWidth="1" strokeDasharray="3 2" opacity="0.4" />
@@ -438,7 +438,7 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
 
               <div className="flex items-start gap-3 rounded-xl bg-red-50 p-4">
                 <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary">
-                  <span className="font-acumin text-sm font-bold italic text-white">−</span>
+                  <span className="font-acumin text-sm font-bold italic text-white">-</span>
                 </div>
                 <div className="flex flex-col gap-1">
                   <span className="font-barlow text-sm font-bold uppercase tracking-wider text-red-700">
@@ -452,7 +452,7 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
             </div>
 
             <p className="font-barlow text-xs leading-relaxed text-neutral-500">
-              Example: A Strokes Gained of +0.50 means your shot finished closer than the benchmark expected. A value of −0.30 means it finished farther away than expected.
+              Example: A Strokes Gained of +0.50 means your shot finished closer than the benchmark expected. A value of -0.30 means it finished farther away than expected.
             </p>
           </div>
         </div>
@@ -475,7 +475,7 @@ function TargetHeader({
       <div className="flex items-center gap-2">
         <TargetIcon className="h-5 w-5 text-primary" />
         <span className="font-acumin text-2xl font-bold italic uppercase leading-none text-white">
-          Target — {targetYards} yards
+          Target - {targetYards} yards
         </span>
       </div>
       <div className="h-4 w-px bg-neutral-700" />
