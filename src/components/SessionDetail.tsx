@@ -365,6 +365,7 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
                 </span>
                 <span className="text-lg text-neutral-400">-</span>
                 <span className="font-acumin text-xl font-bold italic text-white">1</span>
+                <span className="font-barlow text-[15px] font-medium text-neutral-500">(your shot)</span>
               </div>
               <p className="font-barlow text-xs leading-relaxed text-neutral-500">
                 The expected strokes from your starting distance minus the expected strokes from where your ball ended up, minus the one stroke taken. A positive result means you outperformed the benchmark.
