@@ -258,7 +258,7 @@ interface DispersionShot {
   club: string;
   carry: number;
   proximity: number;
-  offline: number;
+  sideCarry: number;
   sg: number;
   x: number;
   y: number;
@@ -272,16 +272,16 @@ const dispersionTargets = [
 ];
 
 const dispersionShots: DispersionShot[] = [
-  { id: 1,  club: "D",  carry: 280.4, proximity: 19.6, offline: 8.2,  sg: 0.45,  x: 60, y: 24, targetYards: 300 },
-  { id: 2,  club: "D",  carry: 275.9, proximity: 24.1, offline: -12.3, sg: -0.32, x: 52, y: 28, targetYards: 300 },
-  { id: 3,  club: "D",  carry: 282.1, proximity: 17.9, offline: 5.1,  sg: 0.91,  x: 64, y: 20, targetYards: 300 },
-  { id: 9,  club: "D",  carry: 278.6, proximity: 21.4, offline: -6.7, sg: -0.14, x: 50, y: 32, targetYards: 300 },
-  { id: 10, club: "D",  carry: 284.3, proximity: 15.7, offline: 3.8,  sg: 1.52,  x: 68, y: 18, targetYards: 300 },
-  { id: 4,  club: "D",  carry: 185.3, proximity: 14.7, offline: 9.4,  sg: 1.12,  x: 36, y: 48, targetYards: 200 },
-  { id: 5,  club: "D",  carry: 180.8, proximity: 19.2, offline: -11.8, sg: -0.18, x: 27, y: 56, targetYards: 200 },
-  { id: 6,  club: "Aw", carry: 98.2,  proximity: 6.8,  offline: 4.2,  sg: 0.78,  x: 26, y: 23, targetYards: 100 },
-  { id: 7,  club: "Aw", carry: 101.5, proximity: 3.5,  offline: -7.6, sg: -0.56, x: 18, y: 30, targetYards: 100 },
-  { id: 8,  club: "4w", carry: 95.7,  proximity: 9.3,  offline: 2.1,  sg: 0.33,  x: 24, y: 34, targetYards: 100 },
+  { id: 1,  club: "D",  carry: 280.4, proximity: 19.6, sideCarry: 8.2,  sg: 0.45,  x: 60, y: 24, targetYards: 300 },
+  { id: 2,  club: "D",  carry: 275.9, proximity: 24.1, sideCarry: -12.3, sg: -0.32, x: 52, y: 28, targetYards: 300 },
+  { id: 3,  club: "D",  carry: 282.1, proximity: 17.9, sideCarry: 5.1,  sg: 0.91,  x: 64, y: 20, targetYards: 300 },
+  { id: 9,  club: "D",  carry: 278.6, proximity: 21.4, sideCarry: -6.7, sg: -0.14, x: 50, y: 32, targetYards: 300 },
+  { id: 10, club: "D",  carry: 284.3, proximity: 15.7, sideCarry: 3.8,  sg: 1.52,  x: 68, y: 18, targetYards: 300 },
+  { id: 4,  club: "D",  carry: 185.3, proximity: 14.7, sideCarry: 9.4,  sg: 1.12,  x: 36, y: 48, targetYards: 200 },
+  { id: 5,  club: "D",  carry: 180.8, proximity: 19.2, sideCarry: -11.8, sg: -0.18, x: 27, y: 56, targetYards: 200 },
+  { id: 6,  club: "Aw", carry: 98.2,  proximity: 6.8,  sideCarry: 4.2,  sg: 0.78,  x: 26, y: 23, targetYards: 100 },
+  { id: 7,  club: "Aw", carry: 101.5, proximity: 3.5,  sideCarry: -7.6, sg: -0.56, x: 18, y: 30, targetYards: 100 },
+  { id: 8,  club: "4w", carry: 95.7,  proximity: 9.3,  sideCarry: 2.1,  sg: 0.33,  x: 24, y: 34, targetYards: 100 },
 ];
 
 function DispersionView() {
@@ -459,8 +459,8 @@ function DispersionView() {
                     <span className="font-acumin text-base font-bold italic text-white">{shot.proximity.toFixed(1)}</span>
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-barlow text-xs font-medium text-neutral-400">Offline</span>
-                    <span className="font-acumin text-base font-bold italic text-white">{shot.offline.toFixed(1)}</span>
+                    <span className="font-barlow text-xs font-medium text-neutral-400">Side Carry</span>
+                    <span className="font-acumin text-base font-bold italic text-white">{shot.sideCarry.toFixed(1)}</span>
                   </div>
                   <div className="flex flex-col">
                     <span className="font-barlow text-xs font-medium text-neutral-400">SG</span>
@@ -489,7 +489,7 @@ function DispersionView() {
               Prox.
             </span>
             <span className="w-14 text-center font-barlow text-xs font-semibold uppercase tracking-wider text-neutral-400">
-              Offline
+              Side Carry
             </span>
             <span className="w-12 text-center font-barlow text-xs font-semibold uppercase tracking-wider text-neutral-400">
               SG
@@ -518,7 +518,7 @@ function DispersionView() {
                     {shot.proximity.toFixed(1)}
                   </span>
                   <span className="w-14 text-center font-acumin text-sm font-bold italic text-white">
-                    {shot.offline > 0 ? "+" : ""}{shot.offline.toFixed(1)}
+                    {shot.sideCarry > 0 ? "+" : ""}{shot.sideCarry.toFixed(1)}
                   </span>
                   <span className={`w-12 text-center font-acumin text-sm font-bold italic ${shot.sg > 0 ? "text-green-400" : "text-red-400"}`}>
                     {shot.sg > 0 ? "+" : ""}{shot.sg.toFixed(2)}
