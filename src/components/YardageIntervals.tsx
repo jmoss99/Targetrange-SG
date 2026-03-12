@@ -10,31 +10,33 @@ interface YardageIntervalsProps {
   onBack: () => void;
 }
 
-type ViewTab = "overview" | "strokes-gained" | "dispersion";
+type ViewTab = "strokes-gained" | "dispersion";
 
 interface IntervalData {
   label: string;
   shotCount: number;
   strokesGained: number;
+  avgProximity: number;
+  bestShot: number;
 }
 
 const intervals: IntervalData[] = [
-  { label: "0 - 25", shotCount: 0, strokesGained: 0 },
-  { label: "25 - 50", shotCount: 3, strokesGained: -1.3 },
-  { label: "50 - 75", shotCount: 8, strokesGained: -0.45 },
-  { label: "75 - 100", shotCount: 13, strokesGained: -0.83 },
-  { label: "100 - 125", shotCount: 5, strokesGained: 0.78 },
-  { label: "125 - 150", shotCount: 0, strokesGained: 0 },
-  { label: "150 - 175", shotCount: 7, strokesGained: 1.02 },
-  { label: "175 - 200", shotCount: 6, strokesGained: 0.47 },
-  { label: "200 - 225", shotCount: 9, strokesGained: 1.3 },
-  { label: "225 - 250", shotCount: 5, strokesGained: 0.62 },
-  { label: "250 - 275", shotCount: 0, strokesGained: 0 },
-  { label: "275 - 300", shotCount: 10, strokesGained: -0.14 },
-  { label: "300 - 325", shotCount: 3, strokesGained: 0.91 },
+  { label: "0 - 25", shotCount: 0, strokesGained: 0, avgProximity: 0, bestShot: 0 },
+  { label: "25 - 50", shotCount: 3, strokesGained: -1.3, avgProximity: 12.4, bestShot: 6.2 },
+  { label: "50 - 75", shotCount: 8, strokesGained: -0.45, avgProximity: 9.8, bestShot: 3.1 },
+  { label: "75 - 100", shotCount: 13, strokesGained: -0.83, avgProximity: 14.2, bestShot: 4.5 },
+  { label: "100 - 125", shotCount: 5, strokesGained: 0.78, avgProximity: 8.6, bestShot: 3.5 },
+  { label: "125 - 150", shotCount: 0, strokesGained: 0, avgProximity: 0, bestShot: 0 },
+  { label: "150 - 175", shotCount: 7, strokesGained: 1.02, avgProximity: 16.3, bestShot: 7.8 },
+  { label: "175 - 200", shotCount: 6, strokesGained: 0.47, avgProximity: 18.9, bestShot: 9.2 },
+  { label: "200 - 225", shotCount: 9, strokesGained: 1.3, avgProximity: 22.1, bestShot: 11.4 },
+  { label: "225 - 250", shotCount: 5, strokesGained: 0.62, avgProximity: 25.7, bestShot: 14.6 },
+  { label: "250 - 275", shotCount: 0, strokesGained: 0, avgProximity: 0, bestShot: 0 },
+  { label: "275 - 300", shotCount: 10, strokesGained: -0.14, avgProximity: 21.4, bestShot: 15.7 },
+  { label: "300 - 325", shotCount: 3, strokesGained: 0.91, avgProximity: 19.6, bestShot: 17.9 },
 ];
 
-function getTotal(data: IntervalData[]): { shotCount: number; strokesGained: number } {
+function getTotal(data: IntervalData[]): { shotCount: number; strokesGained: number; avgProximity: number; bestShot: number } {
   const withShots = data.filter((d) => d.shotCount > 0);
   const totalShots = data.reduce((sum, d) => sum + d.shotCount, 0);
   const avgSG =
@@ -42,7 +44,16 @@ function getTotal(data: IntervalData[]): { shotCount: number; strokesGained: num
       ? withShots.reduce((sum, d) => sum + d.strokesGained * d.shotCount, 0) /
         totalShots
       : 0;
-  return { shotCount: totalShots, strokesGained: avgSG };
+  const avgProximity =
+    withShots.length > 0
+      ? withShots.reduce((sum, d) => sum + d.avgProximity * d.shotCount, 0) /
+        totalShots
+      : 0;
+  const bestShot =
+    withShots.length > 0
+      ? Math.min(...withShots.map((d) => d.bestShot))
+      : 0;
+  return { shotCount: totalShots, strokesGained: avgSG, avgProximity, bestShot };
 }
 
 function formatSG(value: number): string {
@@ -68,7 +79,6 @@ export default function YardageIntervals({ session, onBack }: YardageIntervalsPr
   const total = getTotal(intervals);
 
   const tabs: { id: ViewTab; label: string }[] = [
-    { id: "overview", label: "Overview" },
     { id: "strokes-gained", label: "Strokes Gained" },
     { id: "dispersion", label: "Dispersion" },
   ];
@@ -115,17 +125,20 @@ export default function YardageIntervals({ session, onBack }: YardageIntervalsPr
             <div className="w-[140px] shrink-0 font-barlow text-sm font-semibold uppercase tracking-wider text-white">
               Target Interval
             </div>
-            <div className="w-[80px] shrink-0 text-center font-barlow text-sm font-semibold uppercase tracking-wider text-white">
-              # of Shots
+            <div className="w-[70px] shrink-0 text-center font-barlow text-sm font-semibold uppercase tracking-wider text-white">
+              # Shots
             </div>
             <div className="flex flex-1 items-center justify-center gap-1 font-barlow text-sm font-semibold uppercase tracking-wider text-white">
               <span>Strokes Gained</span>
               <InfoIcon className="h-4 w-4 text-neutral-400" />
             </div>
-            <div className="w-[120px] shrink-0 text-right">
-              <span className="rounded-full bg-neutral-800 px-4 py-1.5 font-barlow text-xs font-semibold uppercase tracking-wider text-white">
-                Average
-              </span>
+            <div className="w-[100px] shrink-0 text-center font-barlow text-sm font-semibold uppercase tracking-wider text-white">
+              Avg Prox.
+              <div className="text-[10px] font-medium normal-case tracking-tight text-neutral-400">(ft)</div>
+            </div>
+            <div className="w-[100px] shrink-0 text-center font-barlow text-sm font-semibold uppercase tracking-wider text-white">
+              Best Shot
+              <div className="text-[10px] font-medium normal-case tracking-tight text-neutral-400">(ft)</div>
             </div>
           </div>
 
@@ -149,11 +162,10 @@ export default function YardageIntervals({ session, onBack }: YardageIntervalsPr
                     {interval.label}
                     <span className="ml-1 text-neutral-800">yards</span>
                   </div>
-                  <div className="w-[80px] shrink-0 text-center font-acumin text-xl font-bold italic text-black">
+                  <div className="w-[70px] shrink-0 text-center font-acumin text-xl font-bold italic text-black">
                     {hasData ? interval.shotCount : ""}
                   </div>
                   <div className="flex flex-1 items-center gap-4">
-                    {/* Bar Chart */}
                     <div className="flex flex-1 items-center">
                       <div className="relative h-5 w-full">
                         {hasData && (
@@ -171,16 +183,20 @@ export default function YardageIntervals({ session, onBack }: YardageIntervalsPr
                         <div className="absolute left-1/2 top-0 h-full w-px bg-neutral-200" />
                       </div>
                     </div>
-                    {/* SG Value */}
                     <div
                       className={`w-[80px] shrink-0 text-right font-acumin text-xl font-bold italic ${
                         hasData ? sgTextColor(interval.strokesGained) : "text-neutral-300"
                       }`}
                     >
-                      {hasData ? formatSG(interval.strokesGained) : "—"}
+                      {hasData ? formatSG(interval.strokesGained) : "-"}
                     </div>
                   </div>
-                  <div className="w-[120px] shrink-0" />
+                  <div className="w-[100px] shrink-0 text-center font-acumin text-xl font-bold italic text-black">
+                    {hasData ? interval.avgProximity.toFixed(1) : "-"}
+                  </div>
+                  <div className="w-[100px] shrink-0 text-center font-acumin text-xl font-bold italic text-black">
+                    {hasData ? interval.bestShot.toFixed(1) : "-"}
+                  </div>
                 </div>
               );
             })}
@@ -190,7 +206,7 @@ export default function YardageIntervals({ session, onBack }: YardageIntervalsPr
               <div className="w-[140px] shrink-0 font-barlow text-sm font-bold uppercase tracking-wider text-black">
                 Total
               </div>
-              <div className="w-[80px] shrink-0 text-center font-acumin text-xl font-bold italic text-black">
+              <div className="w-[70px] shrink-0 text-center font-acumin text-xl font-bold italic text-black">
                 {total.shotCount}
               </div>
               <div className="flex flex-1 items-center gap-4">
@@ -203,7 +219,12 @@ export default function YardageIntervals({ session, onBack }: YardageIntervalsPr
                   {formatSG(total.strokesGained)}
                 </div>
               </div>
-              <div className="w-[120px] shrink-0" />
+              <div className="w-[100px] shrink-0 text-center font-acumin text-xl font-bold italic text-black">
+                {total.avgProximity.toFixed(1)}
+              </div>
+              <div className="w-[100px] shrink-0 text-center font-acumin text-xl font-bold italic text-black">
+                {total.bestShot.toFixed(1)}
+              </div>
             </div>
           </div>
 
@@ -225,140 +246,9 @@ export default function YardageIntervals({ session, onBack }: YardageIntervalsPr
         </div>
       )}
 
-      {activeTab === "overview" && (
-        <OverviewView sessionStrokesGained={session.strokesGained} />
-      )}
-
       {activeTab === "dispersion" && (
         <DispersionView />
       )}
-    </div>
-  );
-}
-
-function computeStats(shots: DispersionShot[]) {
-  if (shots.length === 0)
-    return { avgSG: 0, avgProximity: 0, bestShot: 0, count: 0 };
-  const avgSG = shots.reduce((s, sh) => s + sh.sg, 0) / shots.length;
-  const avgProximity = shots.reduce((s, sh) => s + sh.proximity, 0) / shots.length;
-  const bestShot = Math.min(...shots.map((sh) => sh.proximity));
-  return { avgSG, avgProximity, bestShot, count: shots.length };
-}
-
-function OverviewView({ sessionStrokesGained }: { sessionStrokesGained: number }) {
-  const allStats = computeStats(dispersionShots);
-
-  const targetGroups = dispersionTargets.map((target) => {
-    const targetShots = dispersionShots.filter((s) => s.targetYards === target.yards);
-    return { ...target, stats: computeStats(targetShots) };
-  });
-
-  return (
-    <div className="flex flex-col gap-10">
-      {/* Overall Session */}
-      <div className="flex flex-col gap-4">
-        <h2 className="font-acumin text-2xl font-bold italic uppercase leading-none text-black">
-          Overall Session
-        </h2>
-        <div className="grid grid-cols-3 gap-4">
-          <MetricCard
-            label="Avg Strokes"
-            value={`${sessionStrokesGained >= 0 ? "+" : ""}${sessionStrokesGained.toFixed(2)}`}
-            subtitle="VS Mens Tour"
-            valueColor={sessionStrokesGained > 0 ? "text-green-500" : sessionStrokesGained < 0 ? "text-primary" : "text-white"}
-          />
-          <MetricCard
-            label="Avg Proximity"
-            value={allStats.avgProximity.toFixed(1)}
-            unit="FT"
-            subtitle="To Target"
-          />
-          <MetricCard
-            label="Best Shot"
-            value={allStats.bestShot.toFixed(1)}
-            unit="FT"
-            subtitle="To Target"
-          />
-        </div>
-      </div>
-
-      {/* Per Target */}
-      {targetGroups.map((group) => (
-        <div key={group.yards} className="flex flex-col gap-4">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 rounded-lg border-l-4 border-primary bg-neutral-900 px-4 py-2">
-              <FlagIcon className="h-4 w-4 text-primary" />
-              <span className="font-acumin text-2xl font-bold italic uppercase leading-none text-white">
-                {group.label} Yards
-              </span>
-              <span className="ml-2 font-barlow text-sm font-medium text-neutral-400">
-                {group.stats.count} {group.stats.count === 1 ? "shot" : "shots"}
-              </span>
-            </div>
-          </div>
-          <div className="grid grid-cols-3 gap-3">
-            <MetricCard
-              size="sm"
-              label="Avg Strokes"
-              value={`${group.stats.avgSG >= 0 ? "+" : ""}${group.stats.avgSG.toFixed(2)}`}
-              subtitle="VS Mens Tour"
-              valueColor={group.stats.avgSG > 0 ? "text-green-500" : group.stats.avgSG < 0 ? "text-primary" : "text-white"}
-            />
-            <MetricCard
-              size="sm"
-              label="Avg Proximity"
-              value={group.stats.avgProximity.toFixed(1)}
-              unit="FT"
-              subtitle="To Target"
-            />
-            <MetricCard
-              size="sm"
-              label="Best Shot"
-              value={group.stats.bestShot.toFixed(1)}
-              unit="FT"
-              subtitle="To Target"
-            />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function MetricCard({
-  label,
-  value,
-  unit,
-  subtitle,
-  valueColor = "text-white",
-  size = "lg",
-}: {
-  label: string;
-  value: string;
-  unit?: string;
-  subtitle: string;
-  valueColor?: string;
-  size?: "lg" | "sm";
-}) {
-  const isSmall = size === "sm";
-  return (
-    <div className={`flex flex-col items-center gap-1 rounded-xl bg-neutral-900 ${isSmall ? "px-4 py-3" : "px-6 py-5"}`}>
-      <span className={`font-barlow font-semibold uppercase tracking-wider text-neutral-400 ${isSmall ? "text-[10px]" : "text-xs"}`}>
-        {label}
-      </span>
-      <div className="flex items-baseline gap-1">
-        <span className={`font-acumin font-bold italic leading-none ${valueColor} ${isSmall ? "text-[28px]" : "text-[44px]"}`}>
-          {value}
-        </span>
-        {unit && (
-          <span className={`font-barlow font-semibold uppercase tracking-wider text-neutral-400 ${isSmall ? "text-[10px]" : "text-sm"}`}>
-            {unit}
-          </span>
-        )}
-      </div>
-      <span className={`font-barlow font-semibold uppercase tracking-widest text-neutral-500 ${isSmall ? "text-[8px]" : "text-[10px]"}`}>
-        {subtitle}
-      </span>
     </div>
   );
 }
