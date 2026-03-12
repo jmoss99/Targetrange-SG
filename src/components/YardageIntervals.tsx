@@ -19,15 +19,19 @@ interface IntervalData {
 }
 
 const intervals: IntervalData[] = [
-  { label: "0 - 50", shotCount: 3, strokesGained: -1.3 },
-  { label: "50 - 100", shotCount: 21, strokesGained: -0.83 },
-  { label: "100 - 150", shotCount: 0, strokesGained: 0 },
-  { label: "150 - 200", shotCount: 13, strokesGained: 1.02 },
-  { label: "200 - 250", shotCount: 14, strokesGained: 1.3 },
-  { label: "250 - 300", shotCount: 0, strokesGained: 0 },
-  { label: "300 - 350", shotCount: 13, strokesGained: -0.32 },
-  { label: "350 - 400", shotCount: 41, strokesGained: 1.02 },
-  { label: "400+", shotCount: 2, strokesGained: 1.3 },
+  { label: "0 - 25", shotCount: 0, strokesGained: 0 },
+  { label: "25 - 50", shotCount: 3, strokesGained: -1.3 },
+  { label: "50 - 75", shotCount: 8, strokesGained: -0.45 },
+  { label: "75 - 100", shotCount: 13, strokesGained: -0.83 },
+  { label: "100 - 125", shotCount: 5, strokesGained: 0.78 },
+  { label: "125 - 150", shotCount: 0, strokesGained: 0 },
+  { label: "150 - 175", shotCount: 7, strokesGained: 1.02 },
+  { label: "175 - 200", shotCount: 6, strokesGained: 0.47 },
+  { label: "200 - 225", shotCount: 9, strokesGained: 1.3 },
+  { label: "225 - 250", shotCount: 5, strokesGained: 0.62 },
+  { label: "250 - 275", shotCount: 0, strokesGained: 0 },
+  { label: "275 - 300", shotCount: 10, strokesGained: -0.14 },
+  { label: "300 - 325", shotCount: 3, strokesGained: 0.91 },
 ];
 
 function getTotal(data: IntervalData[]): { shotCount: number; strokesGained: number } {
