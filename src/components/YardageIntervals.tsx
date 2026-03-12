@@ -81,7 +81,7 @@ export default function YardageIntervals({ session, onBack }: YardageIntervalsPr
             <ChevronLeftIcon className="h-4 w-4 text-black" />
           </button>
           <h1 className="font-acumin text-[40px] font-bold italic uppercase leading-none text-black">
-            Yardage Intervals — {session.date}
+            Session Overview - {session.date}
           </h1>
         </div>
       </div>

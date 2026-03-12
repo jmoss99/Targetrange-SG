@@ -125,7 +125,7 @@ export default function SessionDetail({ session, onBack, onYardageIntervals }: S
           >
             <BarChartIcon className="h-5 w-5" />
             <span className="font-barlow text-sm font-semibold uppercase tracking-wider">
-              Yardage Intervals
+              Session Overview
             </span>
           </button>
           <button className="flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-white">
