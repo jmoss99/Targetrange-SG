@@ -6,13 +6,13 @@ interface Session {
   mode: string;
   ballType: string;
   elevation: string;
-  strokesGained: number;
+  strokesGained: number | null;
 }
 
 const sessions: Session[] = [
   { id: 1, date: "8/30/23", shots: 64, targets: 4, mode: "Range", ballType: "Titleist Pro V1x with RPT", elevation: "1500 mt", strokesGained: 1.24 },
   { id: 2, date: "8/17/23", shots: 23, targets: 2, mode: "Net", ballType: "Premium Ball", elevation: "3200 mt", strokesGained: -0.56 },
-  { id: 3, date: "8/10/23", shots: 107, targets: 3, mode: "Range", ballType: "Range Ball", elevation: "1700 mt", strokesGained: 0.83 },
+  { id: 3, date: "8/10/23", shots: 107, targets: 3, mode: "Range", ballType: "Range Ball", elevation: "1700 mt", strokesGained: null },
   { id: 4, date: "8/8/23", shots: 1000, targets: 17, mode: "Range", ballType: "Titleist Pro V1 with RPT", elevation: "500 mt", strokesGained: 2.15 },
   { id: 5, date: "8/3/23", shots: 17, targets: 1, mode: "Range", ballType: "Range Ball", elevation: "250 mt", strokesGained: 0.32 },
   { id: 6, date: "8/3/23", shots: 17, targets: 1, mode: "Range", ballType: "Callaway Chrome Soft X wit...", elevation: "1500 mt", strokesGained: -1.07 },
@@ -78,12 +78,12 @@ export default function SessionTable({ onViewShots }: SessionTableProps) {
             <div className="flex flex-1 justify-center font-barlow text-sm font-medium tracking-tight text-black">
               {session.elevation}
             </div>
-            <div className={`flex flex-1 justify-center font-acumin text-xl font-bold italic ${sgColor(session.strokesGained)}`}>
-              {formatSG(session.strokesGained)}
+            <div className={`flex flex-1 justify-center font-acumin text-xl font-bold italic ${session.strokesGained !== null ? sgColor(session.strokesGained) : "text-neutral-400"}`}>
+              {session.strokesGained !== null ? formatSG(session.strokesGained) : "-"}
             </div>
             <div className="flex flex-1 justify-end">
               <button
-                onClick={() => onViewShots?.({ date: session.date, shots: session.shots, targets: session.targets, strokesGained: session.strokesGained })}
+                onClick={() => onViewShots?.({ date: session.date, shots: session.shots, targets: session.targets, strokesGained: session.strokesGained ?? 0 })}
                 className="font-barlow text-base font-semibold text-primary underline"
               >
                 View Shots
